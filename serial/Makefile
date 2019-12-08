@@ -1,5 +1,5 @@
 SHELL = /bin/sh
-INC_DIR = ../inc/
+INC_DIR = ../args/
 EXECUTABLE_NAME = apsp_serial
 
 # Compiler flags
