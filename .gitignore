@@ -1,0 +1,9 @@
+*
+!.gitignore
+!.gitattributes
+!*.h
+!*.hxx
+!*.hpp
+!*.cpp
+!Makefile
+!serial
