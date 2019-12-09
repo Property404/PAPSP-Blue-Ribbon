@@ -1,12 +1,17 @@
 SHELL = /bin/sh
-INCLUDES = -I../args/ -I../common/
-EXECUTABLE_NAME = apsp_serial
+
+INCLUDES = -I../args/
+EXECUTABLE_NAME = apsp
+
+SRC_DIR=.
+BUILD_DIR=.
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -fmax-errors=2
 CXXFLAGS += $(INCLUDES)
 
-OBJECTS = serial_apsp.o main.o
-OBJECTS += ../common/serial_sssp.o ../common/Graph.o ../common/Timer.o
+
+SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+OBJECTS = $(SOURCES:%.cpp=$(BUILD_DIR)/%.o)
 
 all: release
 

@@ -5,7 +5,6 @@
 !*.hxx
 !*.hpp
 !*.cpp
-!common
 !Makefile
-!serial
+!src
 !args
