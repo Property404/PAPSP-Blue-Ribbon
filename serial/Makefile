@@ -2,10 +2,10 @@ SHELL = /bin/sh
 INCLUDES = -I../args/ -I../common/
 EXECUTABLE_NAME = apsp_serial
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++11
+CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -fmax-errors=2
 CXXFLAGS += $(INCLUDES)
 
-OBJECTS = dijkstra.o ../common/Graph.o
+OBJECTS = apsp.o sssp.o main.o ../common/Graph.o
 
 all: release
 

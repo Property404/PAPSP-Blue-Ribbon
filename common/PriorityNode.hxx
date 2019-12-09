@@ -1,3 +1,4 @@
+#pragma once
 class PriorityNode{
 	public:
 	int index;

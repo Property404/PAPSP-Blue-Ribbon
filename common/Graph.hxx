@@ -1,3 +1,4 @@
+#pragma once
 class Graph
 {
 	int** edge_matrix;
