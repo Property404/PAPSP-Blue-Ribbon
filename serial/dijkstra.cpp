@@ -6,10 +6,9 @@
 #include "args.hxx"
 #include "Graph.hxx"
 #include "PriorityNode.hxx"
+#include "common.hxx"
 
 using namespace std;
-#define DJ_INFINITY 100
-#define DEFAULT_NUMBER_OF_NODES 6
 
 void dijkstraSSSP(const Graph& graph, int source, bool show_columns)
 {
