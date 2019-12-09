@@ -4,6 +4,7 @@
 #include "args.hxx"
 #include "Timer.hxx"
 #include "serial.hxx"
+#include "parallel.hxx"
 using namespace std;
 
 
@@ -14,6 +15,10 @@ int main(int argc, const char* argv[])
 	args::Flag show_meta(parser, "meta", "Display meta info", {'m', "meta"});
 	args::ValueFlag<int> size_opt(parser, "size", "Set number of nodes", {'n', "nodes"});
 	args::ValueFlag<int> seed_opt(parser, "seed", "Set seed", {'s', "seed"});
+
+	args::Flag quiet(parser, "quiet", "surpress results", {'q', "quiet"});
+	args::Flag use_parallel_version(parser, "parallel", "Use parallel APSP", {'P', "parallel"});
+	args::Flag use_serial_version(parser, "serial", "Use serial APSP", {'S', "serial"});
 
 	// Turn off IO synchronization
 	std::ios_base::sync_with_stdio(false);
@@ -46,17 +51,32 @@ int main(int argc, const char* argv[])
 	srand(seed);
 
 	Graph graph(size);
-	graph.display(true);
-	cout<<"\n";
+	if(!quiet)
+	{
+		graph.display(true);
+		cout<<"\n";
+	}
 
 	vector<vector<int>> dist_matrix(size, vector<int>(size));
 	vector<vector<int>> prev_matrix(size, vector<int>(size));
 
 	Timer timer;
 	timer.start();
-	serialAPSP(graph, dist_matrix, prev_matrix);
+
+	// Choose algorithm then run
+	if(use_serial_version && !use_parallel_version)
+		serialAPSP(graph, dist_matrix, prev_matrix);
+	else if(use_parallel_version && !use_serial_version)
+		parallelAPSP(graph, dist_matrix, prev_matrix, 8);
+	else
+	{
+		cerr<<"Must select --serial or --parallel"<<endl;
+		exit(1);
+	}
+
 	timer.stop();
 
+	if(!quiet)
 	for(int i=0;i<size;i++)
 	{
 		cout << static_cast<char>('A'+i) << "-prev";

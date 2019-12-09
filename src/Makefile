@@ -6,7 +6,7 @@ EXECUTABLE_NAME = apsp
 SRC_DIR=.
 BUILD_DIR=.
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -fmax-errors=2
+CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -fmax-errors=2 -fopenmp
 CXXFLAGS += $(INCLUDES)
 
 

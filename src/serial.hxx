@@ -1,6 +1,6 @@
 #pragma once
-#include "common.hxx"
 #include "Graph.hxx"
+#include "common.hxx"
 #include <vector>
 
 void serialSSSP
