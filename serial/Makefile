@@ -1,19 +1,22 @@
 SHELL = /bin/sh
-INC_DIR = ../args/
+INCLUDES = -I../args/ -I../common/
 EXECUTABLE_NAME = apsp_serial
 
-# Compiler flags
-CXXFLAGS = -Wall -Wextra -std=c++11
-CXXFLAGS += -I$(INC_DIR)
-CXXFLAGS += -Ofast
+CXXFLAGS = -Wall -Wextra -Werror -std=c++11
+CXXFLAGS += $(INCLUDES)
 
-OBJECTS = dijkstra.o
+OBJECTS = dijkstra.o ../common/graph.o
 
-# Build recipe
 all: release
-debug: CXXFLAGS+= -Og -g3
-debug: release
-release: $(OBJECTS)
+
+debug: CXXFLAGS+= -O0 -g3
+debug: build
+
+release: CXXFLAGS+= -Ofast -s --lto
+release: build
+
+build: $(OBJECTS)
 	$(CXX) -o $(EXECUTABLE_NAME) $(OBJECTS) $(CXXFLAGS)
+
 clean:
 	rm -f $(EXECUTABLE_NAME) $(OBJECTS)

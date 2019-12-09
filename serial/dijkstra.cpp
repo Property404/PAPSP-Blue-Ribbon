@@ -4,82 +4,11 @@
 #include <vector>
 #include <queue>
 #include "args.hxx"
+#include "graph.hxx"
 
 using namespace std;
 #define DJ_INFINITY 100
 #define DEFAULT_NUMBER_OF_NODES 6
-
-class Graph
-{
-	int** edge_matrix;
-	int number_of_nodes;
-	public:
-	Graph(int n)
-	{
-		number_of_nodes = n;
-		edge_matrix = new int*[n];
-		for(int i=0;i<n;i++)
-		{
-			edge_matrix[i] = new int[n];
-		}
-
-		for(int i=0;i<n;i++)
-		for(int j=0;j<n;j++)
-		{
-			edge_matrix[i][j] = rand()%2?rand()%10:rand()%100;
-			edge_matrix[j][i] = edge_matrix[i][j];
-
-			if(i==j)edge_matrix[i][j] = 0;
-		}
-	}
-
-	void display(bool show_columns = false)const
-	{
-		const auto n = number_of_nodes;
-
-		if(show_columns)
-		{
-			cout<<"\t";
-			for(int i=0;i<n;i++)
-			{
-				cout<<static_cast<char>(i+'A')<<'\t';
-			}
-		}
-
-		for(int row=0;row<n;row++)
-		{
-			cout<<"\n";
-
-			if(show_columns)
-				cout<<static_cast<char>(row+'A')<<"\t";
-
-			for(int column=0;column<n;column++)
-			{
-				cout<<get_length(row, column)<<'\t';
-			}
-
-		}
-		cout<<"\n";
-	}
-
-	int get_number_of_nodes()const
-	{
-		return number_of_nodes;
-	}
-
-	int get_length(int row, int column)const
-	{
-		return edge_matrix[row][column];
-	}
-
-	~Graph(){
-		for(int i=0;i<number_of_nodes;i++)
-		{
-			delete edge_matrix[i];
-		}
-		delete edge_matrix;
-	}
-};
 
 class PriorityNode{
 	public:
@@ -110,7 +39,7 @@ bool operator>(const PriorityNode& lhs, const PriorityNode& rhs)
 	}
 	return false;
 }
-void dijkstra(const Graph& graph, int source, int target, bool show_columns, bool ignore_other_paths)
+void dijkstraSSSP(const Graph& graph, int source, bool show_columns)
 {
 	const int num_nodes = graph.get_number_of_nodes();
 
@@ -135,8 +64,6 @@ void dijkstra(const Graph& graph, int source, int target, bool show_columns, boo
 		}
 		const int u = nodes.top().index;nodes.pop();
 		visited[u] = true;
-		if(u == target)break;
-
 
 		for(int v=0;v<num_nodes;v++)
 		{
@@ -149,19 +76,6 @@ void dijkstra(const Graph& graph, int source, int target, bool show_columns, boo
 				nodes.emplace(v, alt);
 			}
 		}
-	}
-
-	if(ignore_other_paths)
-	{
-		vector<int> prev2(num_nodes, -1);
-		int j=num_nodes-1;
-		while(j != source)
-		{
-			prev2[j] = prev[j];
-			j = prev2[j];
-		}
-		for(int i=0;i<num_nodes;i++)
-			prev[i] = prev2[i];
 	}
 	
 	
@@ -192,11 +106,10 @@ int main(int argc, const char* argv[])
 {
 	args::ArgumentParser parser("Shortest path calculator", "");
 	args::HelpFlag help(parser, "help", "Display this tedxt", {'h', "help"});
-	args::Flag show_columns(parser, "show columns", "Show columns", {'c'});
-	args::Flag show_meta(parser, "meta", "Display meta", {'m'});
-	args::Flag ignore_other_paths(parser, "ignore_other_paths", "Ignore unimportant", {'i'});
-	args::ValueFlag<int> size_opt(parser, "size", "Set number of nodes", {'n'});
-	args::ValueFlag<int> seed_opt(parser, "seed", "Set seed", {'s'});
+	args::Flag show_columns(parser, "show columns", "Show columns", {'c', "show-columns"});
+	args::Flag show_meta(parser, "meta", "Display meta", {'m', "display-meta"});
+	args::ValueFlag<int> size_opt(parser, "size", "Set number of nodes", {'n', "nodes"});
+	args::ValueFlag<int> seed_opt(parser, "seed", "Set seed", {'s', "seed"});
 
 	
 	try
@@ -229,5 +142,5 @@ int main(int argc, const char* argv[])
 	graph.display(args::get(show_columns));
 	if(show_columns)
 		cout<<"\n";
-	dijkstra(graph, 0, size-1, show_columns, ignore_other_paths);
+	dijkstraSSSP(graph, 0, show_columns);
 }
