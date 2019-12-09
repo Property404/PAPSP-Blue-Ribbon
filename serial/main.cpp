@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iostream>
 #include "args.hxx"
+#include "Timer.hxx"
 #include "serial.hxx"
 using namespace std;
 
@@ -13,6 +14,9 @@ int main(int argc, const char* argv[])
 	args::Flag show_meta(parser, "meta", "Display meta info", {'m', "meta"});
 	args::ValueFlag<int> size_opt(parser, "size", "Set number of nodes", {'n', "nodes"});
 	args::ValueFlag<int> seed_opt(parser, "seed", "Set seed", {'s', "seed"});
+
+	// Turn off IO synchronization
+	std::ios_base::sync_with_stdio(false);
 
 	
 	try
@@ -48,7 +52,10 @@ int main(int argc, const char* argv[])
 	vector<vector<int>> dist_matrix(size, vector<int>(size));
 	vector<vector<int>> prev_matrix(size, vector<int>(size));
 
+	Timer timer;
+	timer.start();
 	serialAPSP(graph, dist_matrix, prev_matrix);
+	timer.stop();
 
 	for(int i=0;i<size;i++)
 	{
@@ -61,4 +68,5 @@ int main(int argc, const char* argv[])
 			cout<<"\t"<<d;
 		cout<<"\n";
 	}
+	cout<<"Execution time: "<<timer.getValue()<<std::endl;
 }

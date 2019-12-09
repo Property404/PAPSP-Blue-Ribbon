@@ -5,7 +5,8 @@ EXECUTABLE_NAME = apsp_serial
 CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -fmax-errors=2
 CXXFLAGS += $(INCLUDES)
 
-OBJECTS = serial_apsp.o ../common/serial_sssp.o main.o ../common/Graph.o
+OBJECTS = serial_apsp.o main.o
+OBJECTS += ../common/serial_sssp.o ../common/Graph.o ../common/Timer.o
 
 all: release
 
