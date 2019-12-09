@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <iostream>
-#include "graph.hxx"
+#include "Graph.hxx"
 
 Graph::Graph(int n)
 {

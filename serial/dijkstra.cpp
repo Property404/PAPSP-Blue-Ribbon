@@ -4,41 +4,13 @@
 #include <vector>
 #include <queue>
 #include "args.hxx"
-#include "graph.hxx"
+#include "Graph.hxx"
+#include "PriorityNode.hxx"
 
 using namespace std;
 #define DJ_INFINITY 100
 #define DEFAULT_NUMBER_OF_NODES 6
 
-class PriorityNode{
-	public:
-	int index;
-	int priority;
-
-	PriorityNode(int i, int p)
-	{
-		index = i;
-		priority = p;
-	}
-
-};
-bool operator<(const PriorityNode& lhs, const PriorityNode& rhs)
-{
-	if(lhs.priority < rhs.priority)
-	{
-		return true;
-	}
-	return false;
-}
-
-bool operator>(const PriorityNode& lhs, const PriorityNode& rhs)
-{
-	if(lhs.priority > rhs.priority)
-	{
-		return true;
-	}
-	return false;
-}
 void dijkstraSSSP(const Graph& graph, int source, bool show_columns)
 {
 	const int num_nodes = graph.get_number_of_nodes();

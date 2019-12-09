@@ -5,7 +5,7 @@ EXECUTABLE_NAME = apsp_serial
 CXXFLAGS = -Wall -Wextra -Werror -std=c++11
 CXXFLAGS += $(INCLUDES)
 
-OBJECTS = dijkstra.o ../common/graph.o
+OBJECTS = dijkstra.o ../common/Graph.o
 
 all: release
 
