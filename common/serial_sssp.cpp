@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include "serial.hxx"
+#include "serial_sssp.hxx"
 #include "PriorityNode.hxx"
 
 void serialSSSP
