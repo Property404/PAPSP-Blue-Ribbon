@@ -1,10 +1,20 @@
 *
-!.gitignore
-!.gitattributes
+
+# File types
 !*.h
 !*.hxx
 !*.hpp
 !*.cpp
 !Makefile
+
+# Directories
 !src
+!src/test
+
+# Git shit
+!.gitignore
+!.gitattributes
+
+# Submodules
+!Catch2
 !args
