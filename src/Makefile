@@ -15,7 +15,7 @@ OBJECTS = $(SOURCES:%.cpp=$(BUILD_DIR)/%.o)
 
 all: release
 
-debug: CXXFLAGS+= -O0 -g3
+debug: CXXFLAGS+= -O0 -g3 -DDEBUG
 debug: build
 
 release: CXXFLAGS+= -Ofast -s --lto
