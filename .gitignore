@@ -5,6 +5,7 @@
 !*.hxx
 !*.hpp
 !*.cpp
+!*.sh
 !Makefile
 
 # Directories
