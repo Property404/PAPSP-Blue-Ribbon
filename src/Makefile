@@ -32,7 +32,7 @@ debug: build
 release: CXXFLAGS+= -Ofast -s --lto
 release: build
 
-test: CXXFLAGS+= -O1
+test: CXXFLAGS+= -Og
 test: $(OBJECTS) $(TEST_OBJECTS)
 	$(CXX) -o $(TEST_EXECUTABLE_NAME) $(OBJECTS) $(TEST_OBJECTS) $(CXXFLAGS)
 

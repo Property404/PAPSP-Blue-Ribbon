@@ -24,8 +24,16 @@ static void check(Graph& graph, int size, int threads, int subthreads)
 
 	for(int i=0;i<size;i++)
 	{
-		REQUIRE(serial_dist_matrix[i] == parallel_dist_matrix[i]);
-		REQUIRE(serial_prev_matrix[i] == parallel_prev_matrix[i]);
+		for(int j=0;j<size;j++)
+		{
+			REQUIRE(serial_dist_matrix[i][j] == parallel_dist_matrix[i][j]);
+			REQUIRE(serial_prev_matrix[i][j] == parallel_prev_matrix[i][j]);
+
+			// Make sure it is within bounds
+			REQUIRE(serial_prev_matrix[i][j] < size);
+			REQUIRE(serial_prev_matrix[i][j] >= -1);
+			REQUIRE(serial_dist_matrix[i][j] >= 0);
+		}
 	}
 }
 
