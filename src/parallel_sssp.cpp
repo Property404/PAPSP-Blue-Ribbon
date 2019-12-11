@@ -10,11 +10,11 @@ struct ReductionArgs
 	int from;
 	int to;
 	int u;
-	const Graph* graph;
-	const std::vector<bool>* visited;
-	std::vector<int>* dist;
-	std::vector<int>* prev;
-	std::priority_queue<PriorityNode, std::vector<PriorityNode>, std::greater<PriorityNode>>* nodes;
+	const Graph*const graph;
+	const std::vector<bool>*const visited;
+	std::vector<int>*const dist;
+	std::vector<int>*const prev;
+	std::priority_queue<PriorityNode, std::vector<PriorityNode>, std::greater<PriorityNode>>*const nodes;
 
 };
 
@@ -96,7 +96,6 @@ void parallelSSSP
 					(void* (*)(void*))(reduceSection),
 					&(args_vector[i])
 			);
-
 		}
 
 		reduceSection(&(args_vector[0]));
@@ -135,7 +134,7 @@ void parallelSSSP
 // Mutex for the priority_queue
 static pthread_mutex_t pq_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static void* reduceSection(ReductionArgs* args)
+static void* reduceSection(ReductionArgs*const args)
 {
 	for(int v=args->from; v<=args->to; v++)
 	{
