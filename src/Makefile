@@ -12,13 +12,13 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -fmax-errors=2 -fopenmp
 CXXFLAGS += $(INCLUDES)
 
 
-SOURCES = Graph.o\
-		  PriorityNode.o\
-		  Timer.o\
-		  parallel_apsp.o\
-		  parallel_sssp.o\
-		  serial_apsp.o\
-		  serial_sssp.o
+SOURCES = Graph.cpp\
+		  PriorityNode.cpp\
+		  Timer.cpp\
+		  parallel_apsp.cpp\
+		  parallel_sssp.cpp\
+		  serial_apsp.cpp\
+		  serial_sssp.cpp
 
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
 OBJECTS = $(SOURCES:%.cpp=$(BUILD_DIR)/%.o)
@@ -36,9 +36,7 @@ test: CXXFLAGS+= -Og
 test: $(OBJECTS) $(TEST_OBJECTS)
 	$(CXX) -o $(TEST_EXECUTABLE_NAME) $(OBJECTS) $(TEST_OBJECTS) $(CXXFLAGS)
 
-build: OBJECTS+= main.o
-build: $(OBJECTS)
-	$(CXX) -o $(EXECUTABLE_NAME) $(OBJECTS) $(CXXFLAGS)
-
+build: $(OBJECTS) main.o
+	$(CXX) -o $(EXECUTABLE_NAME) $(OBJECTS) main.o $(CXXFLAGS) 
 clean:
-	rm -f $(EXECUTABLE_NAME) $(TEST_EXECUTABLE_NAME) $(OBJECTS) $(TEST_OBJECTS)
+	rm -f $(EXECUTABLE_NAME) $(TEST_EXECUTABLE_NAME) $(OBJECTS) $(TEST_OBJECTS) main.o

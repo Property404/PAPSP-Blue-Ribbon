@@ -6,11 +6,16 @@
 !*.hpp
 !*.cpp
 !*.sh
+!*.js
+!*.mjs
+!*.html
 !Makefile
 
 # Directories
 !src
 !src/test
+!graph_central
+!graph_forge
 
 # Git shit
 !.gitignore
