@@ -1,3 +1,41 @@
+const ssvg = document.getElementById("serial");
+let even_serial_label = [];
+let even_serial_data = [];
+let serial_cubic_regression = []
+for(let i=0;i<=2000;i+=200)
+{
+	even_serial_label = even_serial_label.concat(String(i));
+	
+	even_serial_data = even_serial_data.concat(i==0?0:SERIAL_TIMES_BY_SIZE[String(i)])
+
+	serial_cubic_regression=serial_cubic_regression.concat(
+		-.03654117 + .0006400594*i - 8.916742*(10**-7)*(i**2)+2.853968*(10**-9)*(i**3)
+	)
+
+}
+new chartXkcd.Line(document.getElementById("serial"),
+	{
+		title: "Serial execution time",
+		xLabel: "Size",
+		yLabel: "Execution time",
+		data: {
+			labels: even_serial_label,
+			datasets: [
+				{
+					label:"Execution time",
+					data: even_serial_data
+				},
+				{
+					label:"Cubic regression",
+					data: serial_cubic_regression
+				}
+			]
+		},
+		options: {
+			legendPosition:chartXkcd.config.positionType.upLeft
+		}
+	});
+/*
 let serial_times = {
 	"10":0.019391,
 	"11":0.095256,
@@ -79,3 +117,4 @@ for(let n in threaded_times)
 			}
 		});
 }
+*/
