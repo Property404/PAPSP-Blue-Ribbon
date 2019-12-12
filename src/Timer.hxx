@@ -12,5 +12,7 @@ class Timer
 	Timer();
 	void start();
 	void stop();
+	void restart();
+	double getCurrent() const;
 	double getValue()const;
 };
