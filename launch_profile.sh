@@ -5,7 +5,12 @@ echo
 echo "Result of numactl command:"
 numactl --hardware
 
-echo "Starting serial profile"
-./profile.sh serial | tee serial_out
-echo "Starting parallel profile"
-./profile.sh parallel | tee parallel_out
+
+echo "Starting serial profile (auto)"
+./profile.sh serial -1 | tee result_serial
+
+for i in -1 2 4 8
+do
+	echo "Starting parallel profile ($i)"
+	./profile.sh parallel $i | tee result_parallel_${i}
+done

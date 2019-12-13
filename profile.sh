@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-USAGE="$0 serial|parallel"
-SIZES_ARRAY=( 8 25 50 75 100 150 200 500 1000 1200 1500 2000)
+USAGE="$0 serial|parallel subthreads"
+SIZES_ARRAY=( $(seq 100 100 2500) )
 SERIAL_ADDITIONAL_SIZES_ARRAY=( $(seq 4 1 100) $(seq 100 10 500) $(seq 500 100 1000) $(seq 1000 200 2000) )
 TOTAL_THREADS_MAX=16
 SEED=3141592
 
-if [ $# -lt 1 ]
+if [ $# -lt 2 ]
 then
 	echo "$USAGE"
 	exit 1
@@ -36,10 +36,12 @@ do
 	then
 		for (( threads=1; threads <= TOTAL_THREADS_MAX; threads*=2 ))
 		do
+			subthreads=$2
 			echo -ne "$size\t"
 			echo -ne "$threads\t"
+			echo -ne "$subthreads\t"
 
-			./src/apsp -Pq --nodes=$size --seed=$SEED -t $threads | grep time | awk '{ print $NF }'
+			./src/apsp -Pq --nodes=$size --seed=$SEED -t $threads -j $subthreads | grep time | awk '{ print $NF }'
 		done
 	else
 		echo -ne "$size\t"
