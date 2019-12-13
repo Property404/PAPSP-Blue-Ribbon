@@ -1,3 +1,6 @@
+To clone:  
+	`git clone --recurse-submodule https://github.com/Property404/PAPSP-blue-ribbon`  
+
 To build, in the `src` directory:  
 	`make`  
 	`./apsp --help`  
